@@ -39,4 +39,36 @@ router.post('/', async (req, res) => {
     res.sendStatus(500)
   }
 })
+
+//Post /api/v1/tasks
+router.patch('/:id', async (req, res) => {
+  try {
+    const id = Number(req.params.id)
+    const { name, priority, completed } = req.body
+    const updatedTask = {
+      name,
+      priority,
+      completed,
+    }
+    const update = await db.updateTask(id, updatedTask)
+    res.json(update)
+  } catch (error) {
+    console.error(`Database error: ${error}`)
+    res.sendStatus(500)
+  }
+})
+
+// Delete Todo
+router.delete('/', async (req, res, next) => {
+  try {
+    const { id } = req.body
+    await db.deleteTasks(id)
+    const getTasks = await db.getTasks()
+
+    res.json({ tasks: getTasks })
+  } catch (error) {
+    next(error)
+  }
+})
+
 export default router

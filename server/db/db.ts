@@ -1,5 +1,5 @@
 import connection from './connection'
-import { Tasks } from '../../models/tasks'
+import { Tasks, updatedTask } from '../../models/tasks'
 
 const db = connection
 
@@ -13,6 +13,10 @@ export function getTasksById(id: number): Promise<Tasks> {
 
 export function addTasks(newTasksObj: Tasks) {
   return db('tasks').insert(newTasksObj)
+}
+
+export function updateTask(id: number, updatedTask: updatedTask) {
+  return db('tasks').where({ id }).update(updatedTask).returning('*')
 }
 
 export function deleteTasks(id: number) {

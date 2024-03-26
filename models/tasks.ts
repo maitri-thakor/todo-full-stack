@@ -4,3 +4,9 @@ export interface Tasks {
   priority: number
   completed: boolean
 }
+
+export interface updatedTask {
+  name: string
+  priority: number
+  completed: boolean
+}
