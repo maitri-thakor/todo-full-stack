@@ -24,7 +24,7 @@ export async function updateTask(
   id: number,
   newTask: Partial<Tasks>,
 ): Promise<Tasks> {
-  const res = await request.put(`${rootUrl}/${id}`).send({ newTask })
+  const res = await request.patch(`${rootUrl}/${id}`).send(newTask)
   return res.body
 }
 

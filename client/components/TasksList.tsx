@@ -4,13 +4,9 @@ import * as api from '../apis/apiClient'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteTask } from '../apis/apiClient'
 import { useState } from 'react'
+import UpdateTasks from './UpdateTasks'
 
 export function TasksList() {
-  const [editMode, setEditMode] = useState(false)
-
-  const handleEditMode = () => {
-    setEditMode(true)
-  }
   // const taskFunc = async () => {
   //   const task = await api.fetchTasks()
   //   console.log(task)
@@ -52,15 +48,15 @@ export function TasksList() {
     <>
       {tasks.map((task) => {
         return (
-          <p key={task.id}>
+          <div key={task.id}>
             <span>
               {task.name}
               {/* {task.priority}
     {task.completed} */}
             </span>{' '}
             <button onClick={() => handleDelete(task.id)}>Delete</button>
-            <button onClick={() => handleEditMode()}>Update</button>
-          </p>
+            <UpdateTasks id={task.id} />
+          </div>
         )
       })}
     </>
