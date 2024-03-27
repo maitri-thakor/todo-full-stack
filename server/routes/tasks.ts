@@ -31,7 +31,8 @@ router.get('/:id', async (req, res) => {
 //Post /api/v1/tasks (allow add tasks)
 router.post('/', async (req, res) => {
   try {
-    const newTasks = req.body
+    const newTasks = req.body.newTasks
+    console.log(newTasks)
     await db.addTasks(newTasks)
     res.sendStatus(200)
   } catch (error) {
@@ -59,9 +60,9 @@ router.patch('/:id', async (req, res) => {
 })
 
 // Delete Todo
-router.delete('/', async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
-    const { id } = req.body
+    const id = Number(req.params.id)
     await db.deleteTasks(id)
     const getTasks = await db.getTasks()
 

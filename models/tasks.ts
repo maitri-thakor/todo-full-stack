@@ -10,3 +10,11 @@ export interface updatedTask {
   priority: number
   completed: boolean
 }
+
+export interface Task {
+  name: string
+}
+
+// export interface Id {
+//   id: number
+// }

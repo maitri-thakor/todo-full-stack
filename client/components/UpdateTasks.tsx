@@ -3,23 +3,35 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import * as api from '../apis/apiClient'
 import { Tasks } from '../../models/tasks'
 
-export function TaskForm() {
-  const [newTasks, setNewTasks] = useState('')
+export function UpdateTasks() {
+  const [updateTasks, setUpdateTasks] = useState('')
   // const [submittedTasks, setsubmittedTasks] = useState('')
   // const [priority, setPriority] = useState('')
   // const [completed, setCompleted] = useState(false)
 
   const queryClient = useQueryClient()
   const mutation = useMutation({
-    mutationFn: (newTasks: { name: string }) => api.addTasks(newTasks),
+    mutationFn: (updateTasks) => api.updateTask(id, updateTasks),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] })
     },
   })
 
+  // const useMutateTodo = () => {
+  //   const queryClient = useQueryClient()
+
+  //   return useMutation({
+  //     mutationFn: editTodo,
+  //     // Notice the second argument is the variables object that the `mutate` function receives
+  //     onSuccess: (data, variables) => {
+  //       queryClient.setQueryData(['todo', { id: variables.id }], data)
+  //     },
+  //   })
+  // }
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTasks(event.target.value)
-    console.log(newTasks)
+    setUpdateTasks(event.target.value)
+    console.log(updateTasks)
   }
 
   // const handlePriorityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,8 +40,8 @@ export function TaskForm() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    mutation.mutate({ name: newTasks })
-    setNewTasks('')
+    mutation.mutate({ name: updateTasks })
+    setUpdateTasks('')
   }
 
   return (
@@ -39,7 +51,7 @@ export function TaskForm() {
           className="new-todo"
           placeholder="What needs to be done?"
           onChange={handleChange}
-          value={newTasks}
+          value={updateTasks}
           id="name"
         ></input>
         <button>Submit</button>
@@ -47,4 +59,4 @@ export function TaskForm() {
     </>
   )
 }
-export default TaskForm
+export default UpdateTasks
